@@ -6,8 +6,6 @@ mcp = FastMCP("IDSL MCP Server")
 tools.register_all_tools(mcp)
 
 if __name__ == "__main__":
-    mcp.run()
-
-# @TODO: Add StreamableHTTP server support
-# @TODO: Understand all tabs on the site
-# @TODO: Access endpoints via postman
+    mcp.run(
+        transport="streamable-http"
+    )
