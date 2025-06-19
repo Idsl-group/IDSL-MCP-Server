@@ -4,13 +4,15 @@ WORKDIR /mcp_server
 
 RUN pip install uv
 
-COPY pyproject.toml
+COPY pyproject.toml .
 
-RUN uv venv
-RUN uv sync
+RUN uv venv && \
+    . .venv/bin/activate && \
+    uv pip install -e .  
 
-COPY server.py
-COPY client.py
+COPY server.py .
+COPY client.py .
+COPY tools/ tools/
 
 EXPOSE 8000
 
