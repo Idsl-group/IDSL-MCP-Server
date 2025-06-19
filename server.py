@@ -1,13 +1,19 @@
 from mcp.server.fastmcp import FastMCP
+from dotenv import load_dotenv
+
+print("Loading environment...")
+load_dotenv("../.env")
+print("Importing tools...")
 import tools
 
-mcp = FastMCP("IDSL MCP Server")
+print("Creating FastMCP instance...")
+mcp = FastMCP(
+    name="IDSL MCP Server",
+)
 
+print("Registering tools...")
 tools.register_all_tools(mcp)
+print("Tools registered!")
 
-if __name__ == "__main__":
-    mcp.run()
-
-# @TODO: Add StreamableHTTP server support
-# @TODO: Understand all tabs on the site
-# @TODO: Access endpoints via postman
+print("Starting server on http://127.0.0.1:8050/mcp")
+mcp.run(transport="streamable-http")
