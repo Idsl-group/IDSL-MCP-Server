@@ -15,5 +15,4 @@ print("Registering tools...")
 tools.register_all_tools(mcp)
 print("Tools registered!")
 
-print("Starting server on http://127.0.0.1:8050/mcp")
 mcp.run(transport="streamable-http")

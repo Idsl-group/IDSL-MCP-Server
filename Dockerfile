@@ -2,18 +2,13 @@ FROM python:3.11-slim
 
 WORKDIR /mcp_server
 
-RUN pip install uv
+COPY requirements.txt .
 
-COPY pyproject.toml .
-
-RUN uv venv && \
-    . .venv/bin/activate && \
-    uv pip install -e .  
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY server.py .
 COPY client.py .
 COPY tools/ tools/
-
 EXPOSE 8000
 
-CMD ["uv", "run", "server.py"]
+CMD ["python", "server.py"]
