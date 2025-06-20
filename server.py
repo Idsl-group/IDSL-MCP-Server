@@ -1,18 +1,12 @@
 from mcp.server.fastmcp import FastMCP
-from dotenv import load_dotenv
-
-print("Loading environment...")
-load_dotenv("../.env")
-print("Importing tools...")
 import tools
+import uvicorn
 
-print("Creating FastMCP instance...")
-mcp = FastMCP(
-    name="IDSL MCP Server",
-)
+# Creating FastMCP Instance
+mcp = FastMCP(name="IDSL MCP Server")
 
-print("Registering tools...")
+# Registering tools on the FastMCP instance
 tools.register_all_tools(mcp)
-print("Tools registered!")
 
-mcp.run(transport="streamable-http")
+# Running the FastMCP Server with a transport type of streamable-http
+app = mcp.streamable_http_app()

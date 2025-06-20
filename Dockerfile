@@ -11,4 +11,4 @@ COPY client.py .
 COPY tools/ tools/
 EXPOSE 8000
 
-CMD ["python", "server.py"]
+CMD ["uvicorn", "server:app", "--reload", "--host", "127.0.0.1", "--port", "8000"]
