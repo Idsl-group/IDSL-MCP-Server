@@ -112,12 +112,12 @@ class MCPOpenAIClient:
                 tool_name = tool_call.function.name
                 arguments = json.loads(tool_call.function.arguments)
 
-                print(f"\n🛠️  Using tool: `{tool_name}` with arguments:\n{json.dumps(arguments, indent=2)}")
+                print(f"\nUsing tool: `{tool_name}` with arguments:\n{json.dumps(arguments, indent=2)}")
 
                 # Execute tool call
                 result = await self.session.call_tool(tool_name, arguments=arguments)
 
-                print(f"✅ Tool `{tool_name}` returned:\n{result.content[0].text}")
+                print(f"Tool `{tool_name}` returned:\n{result.content[0].text}")
 
                 # Add tool response to conversation
                 messages.append(

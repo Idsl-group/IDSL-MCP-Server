@@ -1,6 +1,5 @@
 from mcp.server.fastmcp import FastMCP
 import tools
-import uvicorn
 
 # Creating FastMCP Instance
 mcp = FastMCP(name="IDSL MCP Server")
