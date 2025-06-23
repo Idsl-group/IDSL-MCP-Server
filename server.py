@@ -1,11 +1,17 @@
 from mcp.server.fastmcp import FastMCP
 import tools
 
-# Creating FastMCP Instance
-mcp = FastMCP(name="IDSL MCP Server")
+class MCPServer:
+    def __init__(self, name: str = "IDSL MCP Server"):
+        self.name = name
+        self.mcp = FastMCP(name=self.name)
+        self._register_tools()
 
-# Registering tools on the FastMCP instance
-tools.register_all_tools(mcp)
+    def _register_tools(self):
+        tools.register_all_tools(self.mcp)
 
-# Running the FastMCP Server with a transport type of streamable-http
-app = mcp.streamable_http_app()
+    def get_app(self):
+        return self.mcp.streamable_http_app()
+
+server = MCPServer()
+app = server.get_app()
