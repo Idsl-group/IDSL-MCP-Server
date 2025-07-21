@@ -19,14 +19,14 @@ class CustomListingMiddleware(Middleware):
             tool_names = [tool.name for tool in all_tools]
             logging.info(f"All available tools: {tool_names}")
 
-            authorized_tools = {
-                tool.name: tool for tool in all_tools
+            authorized_tools = [
+                tool for tool in all_tools
                 if check_scope(tool.name, token)
-            }
+            ]
 
             logging.info(f"Returning tools: {authorized_tools}")
-
-            return ListToolsResult(tools=authorized_tools)
+            logging.info(f"List Tools Result: {ListToolsResult(tools=authorized_tools)}")
+            return authorized_tools
 
         except Exception as e:
             logging.error(f"Error in list_tools: {e}")
