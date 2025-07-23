@@ -3,6 +3,11 @@ from fastmcp.server.auth import BearerAuthProvider
 import tools
 from fastapi import FastAPI
 from customListingMiddleware import CustomListingMiddleware
+import jwt
+from dotenv import load_dotenv, dotenv_values
+
+load_dotenv()
+CONFIG = dotenv_values(".env")
 
 class MCPServer:
     def __init__(self, name: str = "IDSL MCP Server"):
@@ -31,6 +36,22 @@ class MCPServer:
 
 
 
-server = MCPServer()
-app = server.get_app()
+mcp = MCPServer()
+mcp_app = mcp.get_app()
+app = FastAPI(lifespan=mcp_app.lifespan)
+app.mount("/mcp", mcp_app)
 
+@app.get("/jwt/{agentName}")
+def generateJwt(agentName):
+    payload = {
+        "agentName": agentName,
+        "scopes": ["tools:add", "tools:subtract", "tools:divide"]
+    }
+
+    token = jwt.encode(payload, CONFIG["SECRET"], algorithm="HS256")
+    return token
+
+@app.get("/url-list")
+def get_all_urls():
+    url_list = [{"path": route.path, "name": route.name} for route in app.routes]
+    return url_list
