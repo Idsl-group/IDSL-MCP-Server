@@ -1,7 +1,11 @@
 import jwt
 from fastapi import HTTPException
+from dotenv import load_dotenv, dotenv_values
 
-SECRET = "your_secret"
+load_dotenv()
+CONFIG = dotenv_values(".env")
+
+SECRET = CONFIG["SECRET"]
 
 def check_scope(tool_name: str, token: str) -> bool:
     print(f"check_scope called for tool '{tool_name}'")
